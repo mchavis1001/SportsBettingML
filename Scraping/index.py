@@ -42,7 +42,6 @@ oddsportal_urls = {
     'NPB': 'baseball/japan/npb',
     'BrazilSerieB': 'soccer/brazil/serie-b',
     'ChinaSuperLeague': 'soccer/china/super-league',
-    'UruguayPrimeraDivision': 'soccer/uruguay/primera-division',
     'SwedenAllsvenskan': 'soccer/sweden/allsvenskan',
     'SwedenSuperettan': 'soccer/sweden/superettan',
     'ParaguayPrimeraDivision': 'soccer/paraguay/primera-division'
@@ -256,6 +255,16 @@ sr_multi_page = {
                                          '2015': ''},
                                 'xpaths': ['//*[@id="stats_squads_standard_for"]',
                                            '//*[@id="stats_squads_keeper_for"]']},
+    'NorwayEliteserien': {'urls': {'2022': 'https://fbref.com/en/comps/28/Eliteserien-Stats',
+                                     '2021': 'https://fbref.com/en/comps/28/10998/2021-Eliteserien-Stats',
+                                     '2020': 'https://fbref.com/en/comps/28/10082/2020-Eliteserien-Stats',
+                                     '2019': 'https://fbref.com/en/comps/28/2897/2019-Eliteserien-Stats',
+                                     '2018': 'https://fbref.com/en/comps/28/1762/2018-Eliteserien-Stats',
+                                     '2017': 'https://fbref.com/en/comps/28/1561/2017-Eliteserien-Stats',
+                                     '2016': 'https://fbref.com/en/comps/28/1505/2016-Tippeligaen-Stats',
+                                     '2015': 'https://fbref.com/en/comps/28/1281/2015-Tippeligaen-Stats'},
+                            'xpaths': ['//*[@id="stats_squads_standard_for"]',
+                                       '//*[@id="stats_squads_keeper_for"]']},
 }
 
 odds_portal_multipage = {
@@ -276,6 +285,15 @@ odds_portal_multipage = {
                   '2017': 'https://www.oddsportal.com/soccer/south-korea/k-league-classic-2017/results/',
                   '2016': 'https://www.oddsportal.com/soccer/south-korea/k-league-classic-2016/results/',
                   '2015': 'https://www.oddsportal.com/soccer/south-korea/k-league-classic-2015/results/'
+                  },
+    'UruguayPrimeraDivision': {'2022': 'https://www.oddsportal.com/soccer/uruguay/primera-division-2021/results/',
+                  '2021': 'https://www.oddsportal.com/soccer/uruguay/primera-division-2021/results/',
+                  '2020': 'https://www.oddsportal.com/soccer/uruguay/primera-division-2020/results/',
+                  '2019': 'https://www.oddsportal.com/soccer/uruguay/primera-division-2019/results/',
+                  '2018': 'https://www.oddsportal.com/soccer/uruguay/primera-division-2018/results/',
+                  '2017': 'https://www.oddsportal.com/soccer/uruguay/primera-division-2017/results/',
+                  '2016': 'https://www.oddsportal.com/soccer/uruguay/primera-division-2016/results/',
+                  '2015': 'https://www.oddsportal.com/soccer/uruguay/primera-division-2015-2016/results/'
                   },
 }
 
@@ -310,7 +328,9 @@ betonline_url = {'MLB': 'baseball/mlb',
                  'SouthKoreaLeague1': 'soccer/south-korea/south-korea-league-1',
                  'PeruLiga1': 'soccer/peru/peru-liga-1-apertura',
                  'ParaguayPrimeraDivision': 'soccer/paraguay/paraguay-primera-division',
-                 'SpanishLaLiga': 'soccer/la-liga/spanish-laliga'}
+                 'SpanishLaLiga': 'soccer/la-liga/spanish-laliga',
+                 'KBO': 'baseball/south-korea/kbo',
+                 'MexicanLMB': 'baseball/mexico/lmb'}
 
 soccer_odds_portal_conv = {'San Jose': 'San Jose Earthquakes',
                            'Minnesota Utd': 'Minnesota United',
@@ -584,7 +604,6 @@ betonline_soccer_conv = {'New York Red Bulls': 'New York RB',
                          'Vasco da Gama': 'VascoDaGamaRJ',
                          'Operário': 'OperarioPR',
                          'Londrina': 'LondrinaEC',
-                         'Guarani': 'GuaranideCampinas',
                          'Sport Recife': 'SportRecifePE',
                          'Brusque Futebol Clube': 'BrusqueSC',
                          'Bragantino': 'RBBragantinoSP',
@@ -607,5 +626,11 @@ betonline_soccer_conv = {'New York Red Bulls': 'New York RB',
                          'Sirius': 'IKSiriusFK',
                          'Goteborg': 'IFKGoteborg',
                          'Jonkoping': 'JonkopingsSodra',
-                         'Vasco': 'VascoDaGamaRJ'
+                         'Vasco': 'VascoDaGamaRJ',
+                         'Cruzeiro': 'CruzeiroMG',
+                         'Chapecoense-SC': 'Chapecoense',
+                         'Nacional': 'NacionalAsuncion',
+                         'Ameliano': 'SportivoAmeliano',
+                         'Dep. Municipal': 'DeportivoMunicipal',
+                         'AD Cantolao': 'AcademiaCantolao'
 }

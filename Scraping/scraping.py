@@ -150,8 +150,11 @@ class Scraper:
 
         driver.get(f'https://www.betonline.ag/sportsbook/{url_sport}')
         xpath = '/html/body/div[2]/section/app-factory-component/amb-menu-lib/div[2]/div[2]/amb-offering-mainsportsbook/amb-games-lib/div/div[3]/div/div[2]'
-
-        WebDriverWait(driver, 60).until(EC.presence_of_all_elements_located((By.XPATH, xpath)))
+        try:
+            WebDriverWait(driver, 30).until(EC.presence_of_all_elements_located((By.XPATH, xpath)))
+        except:
+            driver.quit()
+            return
         y = 1
         new = []
         try:
@@ -208,8 +211,13 @@ class Scraper:
         df['Spread'] = df['Spread'].str.replace(r'½', '.5')
         df['Spread'] = df['Spread'].str.replace(r'pk', '0')
         if sport in soccer:
-            df['Spread'] = df['Spread'].str.rsplit(',', 1).str[1]
-            df['Over/Under'] = df['Over/Under'].str.rsplit(',', 1).str[0]
+            for index, row in df.iterrows():
+                try:
+                    df.loc[index, 'Spread'] = row['Spread'].rsplit(',', 1)[-1]
+                    df.loc[index, 'Over/Under'] = row['Over/Under'].rsplit(',', 1)[0]
+                except Exception as e:
+                    print(e)
+                    pass
         df['Over/Under'] = df['Over/Under'].str.replace(r'½', '.5')
         df['Over/Under'] = df['Over/Under'].str.replace(r'O ', '')
         df['Over/Under'] = df['Over/Under'].str.replace(r'U ', '')
@@ -241,6 +249,8 @@ class Scraper:
                          'Fla Gulf Coast': 'Florida Gulf Coast', 'USC Upstate': 'South Carolina Upstate',
                          })
         df.fillna(0, inplace=True)
+
+        df.to_sql(f'{sport} Betonline', self.engine, index=False, if_exists='replace')
         return df
 
     def get_tennis_data(self, season, sport):

@@ -14,21 +14,33 @@ model = Model()
 
 st.set_page_config(layout='wide')
 
-with st.sidebar:
-    selected_sport = st.selectbox('Select Sport', ('Basketball', 'Baseball', 'Hockey', 'Football', 'Soccer', 'Tennis'))
-    selected_league = st.selectbox('Select League', leagues[selected_sport])
-    select_run_script = st.selectbox('Select Run', ('Backtest', 'Live', 'Manual', 'Data'))
-    # sport_button = st.form_submit_button(f'Go')
 
-# with st.sidebar.form('Sidebar'):
-    # selected_league = st.selectbox('Select League', leagues[selected_sport])
-    # select_run_script = st.selectbox('Select Run', ('Backtest', 'Live', 'Testing', 'Manual', 'Data'))
-    # run_button = st.form_submit_button(f'Go')
+def games():
+    with st.sidebar.form('Game Filters'):
+        sports_options = st.multiselect('Select Sports', leagues.keys(), leagues.keys())
+        run_results = st.form_submit_button('Filter')
+        refresh = st.form_submit_button('Refresh')
 
-st.title(f'{selected_league} {select_run_script}')
+    for sport in sports_options:
+        st.header(sport)
+        for league in leagues[sport]:
+            st.subheader(league)
+            try:
+                live_games = pd.read_sql_table(f'{league} Betonline', con=model.engine)
+                live_games.set_index('Date', inplace=True)
+                st.dataframe(live_games)
+            except:
+                st.write('No Games Found')
+            if refresh:
+                try:
+                    scraper.get_betonline_lines(league)
+                    live_games = pd.read_sql_table(f'{league} Betonline', con=model.engine)
+                    live_games.set_index('Date', inplace=True)
+                    st.dataframe(live_games)
+                except:
+                    st.write('No Games Found')
 
 
-# @st.cache
 def backtest(sport):
     with st.spinner('Wait for it...'):
         try:
@@ -156,16 +168,16 @@ def live(sport):
             final.loc[index, 'Away_Score'] = round(row['Predicted_Away'])
             final.loc[index, 'Home_Score'] = round(row['Predicted_Home'])
 
-            if row['Predicted_Spread'] < row['Spread'] < 0:
+            if row['Predicted_Spread'] < row['Spread'] <= 0:
                 final.loc[index, 'Spread'] = f'{row["Home_Team"]} {-row["Spread"]}'
-            elif row['Spread'] < row['Predicted_Spread'] > 0:
+            elif row['Spread'] < row['Predicted_Spread'] >= 0:
                 final.loc[index, 'Spread'] = f'{row["Away_Team"]} {-row["Spread"]}'
             elif row['Predicted_Spread'] < row['Spread'] > 0:
-                final.loc[index, 'Spread'] = f'{row["Home_Team"]} {-row["Spread"]}'
+                final.loc[index, 'Spread'] = f'{row["Home_Team"]} {row["Spread"]}'
             elif row['Predicted_Spread'] > row['Spread'] < 0:
-                final.loc[index, 'Spread'] = f'{row["Away_Team"]} {-row["Spread"]}'
+                final.loc[index, 'Spread'] = f'{row["Away_Team"]} {row["Spread"]}'
 
-            if (sport in leagues['Soccer']) and 0.25 <= row['Predicted_Spread'] <= 0.25:
+            if (sport in leagues['Soccer']) and -0.25 <= row['Predicted_Spread'] <= 0.25:
                 final.loc[index, 'MoneyLine'] = f'Draw'
             else:
                 if row['Predicted_Spread'] > 0:
@@ -232,11 +244,25 @@ def historical_data(sport):
             st.dataframe(combined_df)
 
 
-if select_run_script == 'Backtest':
+with st.sidebar:
+    select_run_script = st.selectbox('Select Run', ('Games', 'Backtest', 'Live', 'Manual', 'Data'))
+    if select_run_script != 'Games':
+        selected_sport = st.selectbox('Select Sport', ('Basketball', 'Baseball', 'Hockey', 'Football', 'Soccer', 'Tennis'))
+        selected_league = st.selectbox('Select League', leagues[selected_sport])
+
+
+if select_run_script == 'Games':
+    st.title(f'Games Today')
+    games()
+elif select_run_script == 'Backtest':
+    st.title(f'{selected_league} {select_run_script}')
     backtest(selected_league)
 elif select_run_script == 'Live':
+    st.title(f'{selected_league} {select_run_script}')
     live(selected_league)
 elif select_run_script == 'Manual':
+    st.title(f'{selected_league} {select_run_script}')
     manual(selected_league)
 elif select_run_script == 'Data':
+    st.title(f'{selected_league} {select_run_script}')
     historical_data(selected_league)

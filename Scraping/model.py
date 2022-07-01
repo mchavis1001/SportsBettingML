@@ -140,10 +140,10 @@ class Model:
 
             elif season != '':
                 df = pd.read_sql_table(f'{season} {sport} Matched', con=self.engine)
+                df = df[df['Spread'] != 0]
             else:
                 df = pd.read_sql_table(f'Consolidated {sport} Data', con=self.engine)
-
-            df = df[df['Spread'] != 0]
+                df = df[df['Spread'] != 0]
 
         model_file_path = Path(f"Scraping/Model/{sport}/{sport}_Away_model.json")
         with open(model_file_path, "r") as json_file:
