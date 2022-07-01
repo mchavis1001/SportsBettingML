@@ -5,7 +5,7 @@ leagues = {
     'Basketball': ['WNBA', 'EuroLeague', 'GermanyBBL', 'ItalyLega', 'VTBUnited', 'SuperLig', 'SuperLeague', 'NBA',
                    'NCAABasketball', 'GreekBasketball', 'Eurocup', 'SpainACB', 'FranceLNB', 'NBLAustralia'],
     'Tennis': ['ATPRome', 'WTARome', 'ATPGeneva', 'ATPLyon', 'WTAStrasbourg', 'WTARabat', 'ChallengerShykent2'],
-    'Soccer': ['MLS', 'EPL', 'LaLiga', 'SerieA', 'Ligue1', 'Bundesliga', 'PrimeraDivision', 'BrazilSerieB', 'PremierLeague',
+    'Soccer': ['MLS', 'EPL', 'SpanishLaLiga', 'SerieA', 'Ligue1', 'Bundesliga', 'PrimeraDivision', 'BrazilSerieB', 'PremierLeague',
                'ChinaSuperLeague', 'BrazilSerieA', 'UruguayPrimeraDivision', 'SwedenAllsvenskan', 'SwedenSuperettan',
                'SouthKoreaLeague1', 'PeruLiga1', 'ParaguayPrimeraDivision'],
     'Football': ['NFL'],
@@ -33,7 +33,7 @@ oddsportal_urls = {
     'VTBUnited': 'basketball/russia/vtb-united-league',
     'SuperLig': 'basketball/turkey/super-lig',
     'SuperLeague': 'basketball/israel/super-league',
-    'LaLiga': 'soccer/spain/laliga',
+    'SpanishLaLiga': 'soccer/spain/laliga',
     'SerieA': 'soccer/italy/serie-a',
     'Ligue1': 'soccer/france/ligue-1',
     'Bundesliga': 'soccer/germany/bundesliga',
@@ -89,7 +89,7 @@ sr_multi_page = {
                                 '2015': 'https://fbref.com/en/comps/9/733/2014-2015-Premier-League-Stats'
                                 },
                                 'xpaths': ['//*[@id="stats_squads_standard_for"]', '//*[@id="stats_squads_keeper_for"]']},
-                        'LaLiga': {'urls': {'2022': 'https://fbref.com/en/comps/12/La-Liga-Stats',
+                        'SpanishLaLiga': {'urls': {'2022': 'https://fbref.com/en/comps/12/La-Liga-Stats',
                                    '2021': 'https://fbref.com/en/comps/12/10731/2020-2021-La-Liga-Stats',
                                    '2020': 'https://fbref.com/en/comps/12/3239/2019-2020-La-Liga-Stats',
                                    '2019': 'https://fbref.com/en/comps/12/1886/2018-2019-La-Liga-Stats',
@@ -309,7 +309,8 @@ betonline_url = {'MLB': 'baseball/mlb',
                  'SwedenSuperettan': 'soccer/sweden/sweden-superettan',
                  'SouthKoreaLeague1': 'soccer/south-korea/south-korea-league-1',
                  'PeruLiga1': 'soccer/peru/peru-liga-1-apertura',
-                 'ParaguayPrimeraDivision': 'soccer/paraguay/paraguay-primera-division'}
+                 'ParaguayPrimeraDivision': 'soccer/paraguay/paraguay-primera-division',
+                 'SpanishLaLiga': 'soccer/la-liga/spanish-laliga'}
 
 soccer_odds_portal_conv = {'San Jose': 'San Jose Earthquakes',
                            'Minnesota Utd': 'Minnesota United',
@@ -366,7 +367,6 @@ soccer_odds_portal_conv = {'San Jose': 'San Jose Earthquakes',
                            'Shanghai Shenx': 'Shanghai Shenxin',
                            'Shiji Ever Bright': 'Cangzhou',
                            'Yanbian Funde': 'Yanbian Longding',
-                           'Jiangsu Sainty': 'Jiangsu Suning',
                            'Zhej Greentown': 'Zhejiang Professional',
                            'Wuhan Three Towns FC': 'Wuhan Three Towns',
                            'Chengdu Better City FC': 'Chengdu Rongcheng',
@@ -476,7 +476,7 @@ soccer_odds_portal_conv = {'San Jose': 'San Jose Earthquakes',
                            'Palmeiras SP': 'Palmeiras',
                            'SantosSP': 'Santos',
                            'Sao Paulo SP': 'Sao Paulo',
-                           'Vasco da Gama': 'Vasco'
+                           'Vasco da Gama': 'Vasco',
 }
 
 baseball_odds_portal_conv = {'Arizona Diamondbacks': 'ARI',
@@ -607,4 +607,5 @@ betonline_soccer_conv = {'New York Red Bulls': 'New York RB',
                          'Sirius': 'IKSiriusFK',
                          'Goteborg': 'IFKGoteborg',
                          'Jonkoping': 'JonkopingsSodra',
+                         'Vasco': 'VascoDaGamaRJ'
 }

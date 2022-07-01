@@ -206,7 +206,7 @@ class Model:
 
     def backtest_stats(self, sport, **kwargs):
         season = kwargs.get('season', '')
-        soccer = ['EPL', 'LaLiga', 'MLS', 'SerieA', 'Ligue1', 'Bundesliga']
+        soccer = leagues['Soccer']
         if season == '':
             final = pd.read_sql_table(f'Consolidated {sport} Backtest', con=self.engine)
         else:

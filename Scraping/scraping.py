@@ -181,6 +181,7 @@ class Scraper:
                                 f'/html/body/div[2]/section/app-factory-component/amb-menu-lib/div[2]/div[2]/amb-offering-mainsportsbook/amb-games-lib/div/div[3]/div/div[2]/div[{y}]/div[{x}]/table/tr/td[2]/lines-row[1]/tr/td[3]/bet-pick/div/div/div[1]').text
                         except Exception as e:
                             spread = '0'
+                            print(e)
 
                         try:
                             ou = driver.find_element_by_xpath(
@@ -206,8 +207,8 @@ class Scraper:
         # df.str.replace('EVEN', 100, inplace=True)
         df['Spread'] = df['Spread'].str.replace(r'½', '.5')
         df['Spread'] = df['Spread'].str.replace(r'pk', '0')
-        df['Spread'] = df['Spread'].str.rsplit(',', 1).str[1]
         if sport in soccer:
+            df['Spread'] = df['Spread'].str.rsplit(',', 1).str[1]
             df['Over/Under'] = df['Over/Under'].str.rsplit(',', 1).str[0]
         df['Over/Under'] = df['Over/Under'].str.replace(r'½', '.5')
         df['Over/Under'] = df['Over/Under'].str.replace(r'O ', '')
@@ -422,8 +423,8 @@ class Scraper:
         page = 1
         data = []
 
-        spread_season = ['EPL', 'EuroLeague', 'GermanyBBL', 'ItalyLega', 'VTBUnited', 'SuperLig', 'SuperLeague', 'LaLiga',
-                         'SerieA', 'Ligue1', 'Bundesliga']
+        spread_season = ['EPL', 'EuroLeague', 'GermanyBBL', 'ItalyLega', 'VTBUnited', 'SuperLig', 'SuperLeague',
+                         'SpanishLaLiga', 'SerieA', 'Ligue1', 'Bundesliga']
         season_conv = {'2021': '2020-2021', '2020': '2019-2020', '2019': '2018-2019', '2018': '2017-2018',
                        '2017': '2017-2018', '2016': '2016-2017', '2015': '2015-2016'}
 
