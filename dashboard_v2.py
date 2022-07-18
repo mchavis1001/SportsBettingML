@@ -58,7 +58,7 @@ def backtest(sport):
             # chart_button = st.form_submit_button('Display')
 
         with st.sidebar.form('Backtest Filters'):
-            chart_dropdown = st.selectbox('Select Bet Type', ('Spread', 'MoneyLine', 'Total'))
+            chart_dropdown = st.selectbox('Select Bet Type', ('MoneyLine', 'Spread', 'Total'))
             year = st.select_slider('Select Year', final['Year'].sort_values(ascending=True), value=(final['Year'].min(), final['Year'].max()))
             home_odds = st.select_slider('Home Odds', round(final['Home_ML'].sort_values(ascending=True), 2), value=(round(final['Home_ML'].min(), 2), round(final['Home_ML'].max(), 2)))
             away_odds = st.select_slider('Away Odds', round(final['Away_ML'].sort_values(ascending=True), 2), value=(round(final['Away_ML'].min(), 2), round(final['Away_ML'].max(), 2)))
@@ -233,7 +233,13 @@ def historical_data(sport):
             stats_df = data.clean_sr_stats(sport, season)
             games_df = data.clean_odds(sport, season)
             combined_df = data.combine_odds_stats(season, sport)
-            st.write(f'Match Rate: {(len(combined_df)/len(games_df))*100}%')
+            match_rate = (len(combined_df)/len(games_df))*100
+            st.write(f'Match Rate: {match_rate}%')
+            missing_odds_teams = games_df['Home_Team'][~games_df['Home_Team'].isin(combined_df['Home_Team'])]
+            missing_stats_teams = stats_df['Team'][~stats_df['Team'].isin(combined_df['Home_Team'])]
+            if match_rate < 100:
+                st.write(f'Missing Odds Teams: {missing_odds_teams.unique().tolist()}')
+                st.write(f'Missing Stats Teams: {missing_stats_teams.unique().tolist()}')
             if stats_box:
                 st.write('Stats Data')
                 st.dataframe(stats_df)

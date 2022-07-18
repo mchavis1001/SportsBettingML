@@ -50,8 +50,9 @@ class CleanData:
                 df = pd.merge(pitching_df, batting_df, on='Finals', suffixes=('_Pitching', '_Batting'))
                 df.rename(columns={'Finals': 'Tm'}, inplace=True)
             df = df.drop(columns=['GS', 'GF'])
-            df['Team'] = df['Tm'].replace(baseball_odds_portal_conv)
+            df['Team'] = df['Tm'].replace(baseball_sr_odds_conv[sport])
             df['Tm'] = df['Team'].replace(betonline_baseball_conv)
+            df = df[df['Tm'] != 'League Totals']
 
             df.to_sql(f'{season} {sport} Stats', self.engine, index=False, if_exists='replace')
 
@@ -152,8 +153,8 @@ class CleanData:
             df = pd.merge(standard_df, keeper_df, on='Squad', suffixes=('_Standard', '_Keeper'))
             print(df)
             df = df.drop(columns=['# Pl_Standard', 'MP_Standard', 'Starts_Standard', 'Min_Standard', '90s_Standard', '# Pl_Keeper', 'MP_Keeper', 'Starts_Keeper', 'Min_Keeper', '90s_Keeper', 'W', 'D', 'L', 'Age'], axis=1)
-            df['Team'] = df['Squad'].replace(soccer_odds_portal_conv)
-            df['Tm'] = df['Team'].replace(betonline_soccer_conv)
+            df['Team'] = df['Squad'].replace(soccer_sr_odds_conv[sport])
+            df['Tm'] = df['Team'].replace(soccer_sr_betonline_conv[sport])
             df = df.drop(columns=['Squad'])
             df = df.fillna(0)
 
@@ -442,7 +443,7 @@ class CleanData:
                 x += 1
 
         elif sport in oddsportal_tennis:
-            df = df[(df['3'] != 'award.') & (df['3'] != 'canc.') & (df['3'] != 'w.o.') & (df['3'] != 'ret.')]
+            df = df[(df['3'] != 'award.') & (df['3'] != 'canc.') & (df['3'] != 'w.o.') & (df['3'] != 'ret.') & (df['3'] != 'abn.')]
             df = df[(df['1'] != df['3'])]
             df = df.drop(columns=['2', '6'])
             df['Away_Team'] = df['1'].str.rsplit(' - ', 1).str[0]
@@ -472,8 +473,8 @@ class CleanData:
                     print(e)
                 x += 1
 
-        elif sport in ['CPBL', 'NPB', 'MexicanLMB']:
-            df = df[(df['3'] != 'postp.') & (df['4'] != '-') & (df['3'] != 'canc.')]
+        elif sport in ['CPBL', 'NPB', 'MexicanLMB', 'KBO']:
+            df = df[(df['3'] != 'postp.') & (df['4'] != '-') & (df['3'] != 'canc.') & (df['3'] != df['2'])]
 
             df['Away_Team'] = df['1'].str.rsplit(' - ', 1).str[0]
             df['Away_Team'] = df['Away_Team'].str.rsplit(' ', 1).str[0]
@@ -506,7 +507,7 @@ class CleanData:
 
         elif sport in soccer:
             df = df.drop(columns=['6'])
-            df = df[(df['1'] != df['2']) & (df['3'] != '-') & (df['2'] != 'award.') & (df['2'] != 'canc.')]
+            df = df[(df['1'] != df['2']) & (df['3'] != '-') & (df['2'] != 'award.') & (df['2'] != 'canc.') & (df['2'] != 'postp.')]
             print(df)
             df['Away_Team'] = df['1'].str.rsplit(' - ', 1).str[0]
             df['Home_Team'] = df['1'].str.rsplit(' - ', 1).str[1]

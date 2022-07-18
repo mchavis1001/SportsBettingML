@@ -433,8 +433,7 @@ class Scraper:
         page = 1
         data = []
 
-        spread_season = ['EPL', 'EuroLeague', 'GermanyBBL', 'ItalyLega', 'VTBUnited', 'SuperLig', 'SuperLeague',
-                         'SpanishLaLiga', 'SerieA', 'Ligue1', 'Bundesliga']
+        spread_season = ['EPL', 'EuroLeague', 'GermanyBBL', 'ItalyLega', 'VTBUnited', 'SuperLig', 'SuperLeague', 'Bundesliga']
         season_conv = {'2021': '2020-2021', '2020': '2019-2020', '2019': '2018-2019', '2018': '2017-2018',
                        '2017': '2017-2018', '2016': '2016-2017', '2015': '2015-2016'}
 
